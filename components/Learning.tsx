@@ -10,10 +10,10 @@ const items = [
     desc:'RL fundamentals and Q-learning for future Y-Light Engine integration — phrase evaluator, driver selection, and show conductor layers.' },
   { icon:'⬛', topic:'PCB Design',         sub:'KiCad / JLCPCB',    progress:55,
     desc:'Schematic capture, layout, DRC, and prototype manufacturing. Currently on Rev_A of the Y1-Proto board with ESP32-S3 and MAX3485.' },
-  { icon:'Aa', topic:'German & Spanish',  sub:'Languages',           progress:38,
-    desc:'Actively studying both as part of a broader language interest alongside Norwegian and English.' },
-  { icon:'◐',  topic:'Lucid Dreaming',    sub:'Practice',            progress:50,
-    desc:'Building a consistent practice around dream journaling, reality checks, and WILD/MILD techniques.' },
+  { icon:'⬢',  topic:'Computer Graphics',  sub:'WebGL / WGPU',        progress:42,
+    desc:'Exploring GPU pipeline fundamentals, shader programming, and real-time rendering techniques to support future visualiser work in Y-Light Engine.' },
+  { icon:'⊕',  topic:'Rust Async & Types', sub:'Advanced Patterns',  progress:55,
+    desc:'Deepening knowledge of async runtimes, trait objects, lifetimes, and zero-cost abstractions for production-quality Rust across Y-Link and Y-Light.' },
 ]
 
 export default function Learning() {

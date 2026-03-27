@@ -6,6 +6,22 @@ import path from 'path'
 export const metadata: Metadata = {
   title: 'Blog — Kristoffer',
   description: 'Writing on Rust, embedded systems, AI-driven software, and building products.',
+  alternates: {
+    canonical: 'https://nerskogen.com/blog',
+  },
+  openGraph: {
+    title: 'Blog — Kristoffer',
+    description: 'Writing on Rust, embedded systems, AI-driven software, and building products.',
+    url: 'https://nerskogen.com/blog',
+    siteName: 'nerskogen.com',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog — Kristoffer',
+    description: 'Writing on Rust, embedded systems, AI-driven software, and building products.',
+  },
 }
 
 interface PostMeta {

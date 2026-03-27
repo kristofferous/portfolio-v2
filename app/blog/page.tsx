@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import fs from 'fs'
-import path from 'path'
+import { getAllPosts } from '@/lib/blog'
 
 export const metadata: Metadata = {
   title: 'Blog — Kristoffer',
@@ -22,54 +21,6 @@ export const metadata: Metadata = {
     title: 'Blog — Kristoffer',
     description: 'Writing on Rust, embedded systems, AI-driven software, and building products.',
   },
-}
-
-interface PostMeta {
-  slug: string
-  title: string
-  date: string
-  readTime: string
-  tags: string[]
-  excerpt: string
-}
-
-function parsePost(slug: string): PostMeta | null {
-  const mdxPath = path.join(process.cwd(), 'app/blog', slug, 'page.mdx')
-  if (!fs.existsSync(mdxPath)) return null
-
-  const content = fs.readFileSync(mdxPath, 'utf-8')
-
-  const titleMatch = content.match(/title="([^"]+)"/)
-  const dateMatch = content.match(/date="([^"]+)"/)
-  const readTimeMatch = content.match(/readTime="([^"]+)"/)
-  // Match tags={[...]} — outer braces aren't regex-special outside classes
-  const tagsMatch = content.match(/tags=[{]([^}]+)[}]/)
-  const descMatch = content.match(/description:\s*['"](.+?)['"]/)
-
-  if (!titleMatch || !dateMatch || !readTimeMatch || !tagsMatch) return null
-
-  const tags = Array.from(tagsMatch[1].matchAll(/['"]([^'"]+)['"]/g)).map(m => m[1])
-
-  return {
-    slug,
-    title: titleMatch[1],
-    date: dateMatch[1],
-    readTime: readTimeMatch[1],
-    tags,
-    excerpt: descMatch?.[1] ?? '',
-  }
-}
-
-function getAllPosts(): PostMeta[] {
-  const blogDir = path.join(process.cwd(), 'app/blog')
-  const slugs = fs.readdirSync(blogDir, { withFileTypes: true })
-    .filter(e => e.isDirectory())
-    .map(e => e.name)
-
-  return slugs
-    .map(parsePost)
-    .filter((p): p is PostMeta => p !== null)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
 export default function BlogIndex() {

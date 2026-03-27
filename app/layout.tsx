@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Barlow_Condensed, DM_Sans, DM_Mono } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import Cursor from '@/components/Cursor'
 import './globals.css'
 
@@ -36,7 +37,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${barlowCondensed.variable} ${dmSans.variable} ${dmMono.variable}`}>
-      <body><Cursor />{children}</body>
+      <body>
+        <Cursor />
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }

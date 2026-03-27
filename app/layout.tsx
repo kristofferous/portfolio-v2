@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Barlow_Condensed, DM_Sans, DM_Mono } from 'next/font/google'
+import Cursor from '@/components/Cursor'
 import './globals.css'
 
 const barlowCondensed = Barlow_Condensed({
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${barlowCondensed.variable} ${dmSans.variable} ${dmMono.variable}`}>
-      <body>{children}</body>
+      <body><Cursor />{children}</body>
     </html>
   )
 }

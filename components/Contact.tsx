@@ -23,11 +23,13 @@ export default function Contact() {
       </a>
       <div className="flex items-center justify-center gap-5 flex-wrap mt-11">
         {[
-          { href:'https://nerskogen.com', label:'nerskogen.com' },
+          { href:'https://nerskogen.com',  label:'nerskogen.com'   },
           null,
-          { href:'https://y-link.no',     label:'y-link.no'     },
+          { href:'https://y-link.no',      label:'y-link.no'       },
           null,
-          { href:'https://github.com',    label:'GitHub'        },
+          { href:'https://github.com',     label:'GitHub'          },
+          null,
+          { href:'tel:+4796632121',        label:'+47 966 32 121'  },
         ].map((item, i) =>
           item === null
             ? <span key={i} className="w-1 h-1 bg-bdr rounded-full" />

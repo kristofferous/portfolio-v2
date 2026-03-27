@@ -1,0 +1,192 @@
+import BlogPostLayout from '@/components/BlogPostLayout'
+import Callout from '@/components/mdx/Callout'
+import { Stats, Stat } from '@/components/mdx/Stats'
+
+export const metadata = {
+    title: 'My First PCBs: Lessons from the First and Second Y-Link Hardware Revisions — Kristoffer',
+    description: 'What I learned designing my first two Y-Link DMX controller boards — from manually soldering an ESP32-S3 devkit onto the first revision to finally reaching a stable prototype in the second.',
+}
+
+<BlogPostLayout
+    title="My First PCBs: Lessons from the First and Second Y-Link Hardware Revisions"
+    date="Jan 2026"
+    readTime="12 min"
+    tags={['PCB', 'Hardware', 'ESP32']}
+>
+
+    After months of breadboard prototyping, jumper wires, temporary fixes, and “good enough for now” wiring, I decided it was time to make proper PCBs for the Y-Link hardware node. I had already proven the core concept well enough to know the project was real. What I needed next was something more compact, more repeatable, and more serious than a hand-wired prototype.
+
+    This post is about those first two board revisions.
+
+    The first revision taught me what happens when a board is technically functional but still unstable in ways that waste enormous amounts of time. The second revision was the first one that actually felt solid — not perfect, not final, but stable enough that I could stop doubting the hardware every time something strange happened.
+
+    Looking back, the lessons were not mostly about routing, or footprint libraries, or even manufacturing. The biggest lessons were about design decisions that seem small on paper but completely change how a board behaves in reality.
+
+    ## Why I Made a PCB at All
+
+    Y-Link is building hardware for intelligent lighting control, and that meant I eventually had to move beyond a development setup. Breadboards and dev boards are fine for early testing, but they become a liability once you start depending on them for repeatable results. Connectors come loose, wiring changes over time, and debugging becomes harder because you can never be fully sure whether the issue is in the code, the signal integrity, the power delivery, or just a slightly bad connection.
+
+    I wanted a board that gave me a known baseline:
+    - ESP32-S3 based control
+    - RS-485 output for DMX
+    - clean power handling
+    - straightforward flashing and development
+    - a form factor that looked like an actual product path instead of a lab experiment
+
+    Both revisions were ordered as PCBA through JLCPCB, but they were not equally integrated. That distinction ended up mattering more than I expected.
+
+    <Stats>
+      <Stat value="300NOK" label="cost per board" />
+      <Stat value="5" label="units ordered" />
+      <Stat value="100×100mm" label="form factor" />
+    </Stats>
+
+    ## The First Revision: A Real PCB, But Not Yet a Real Product
+
+    The first revision was my first serious attempt at turning the Y-Link hardware into an actual board rather than a collection of modules. It already looked much more professional than the breadboard setup, and getting a manufactured board back for the first time was a big milestone.
+
+    But it still leaned too much on development-board thinking.
+
+    The biggest compromise was that the ESP32-S3 was not fully integrated as part of the assembly in the way I really wanted. I had to manually solder the ESP32-S3 devkit onto the board after it arrived. That sounds manageable in theory. In practice, it was annoying, time-consuming, and not something I wanted anywhere near a future product workflow.
+
+    It introduced several problems at once.
+
+    First, it made assembly more manual than it should have been. The whole point of ordering PCBA is to remove avoidable hand assembly and reduce opportunities for mistakes. Having to manually mount one of the most important parts on the board defeats a lot of that benefit.
+
+    Second, it made the board feel transitional. It worked, but it still had one foot in prototyping. It was not a clean, self-contained hardware revision. It was a custom board carrying some of the baggage of a dev setup.
+
+    Third, it made rework and iteration less pleasant. If anything around the devkit area needed adjustment, it was simply more awkward than it would have been with a properly integrated design.
+
+    The DMX side of the first revision was also clearly still prototype-oriented. Instead of having XLR3 DMX directly on the board, it only had screw terminals for the DMX output. Electrically, that was enough to test functionality. Mechanically, though, it was not ideal. It meant extra wiring, less robustness, and a setup that still felt improvised.
+
+    For quick testing on a bench, screw terminals are fine. For something that is supposed to become a reliable lighting device, they are not where you want to stop.
+
+    So the first revision did something important: it proved that the general direction was valid. But it also made clear that I had not yet crossed the line from “working prototype” to “stable hardware platform.”
+
+    ## The Bug That Wasted Weeks
+
+    The biggest issue with the first revision was not power, not the ESP32, and not assembly quality. It was the RS-485 bus biasing.
+
+    This was the issue that caused flickering, unstable behavior, and enough confusion that I spent far too long treating it as a firmware problem.
+
+    The first revision had no bias resistors on the RS-485 bus.
+
+    That omission turned out to be the root cause of the strange behavior I was seeing. The DMX output could appear mostly correct and then still produce intermittent flickering or incorrect fixture behavior. It was not always dramatic. Sometimes it was subtle enough to make me think I had a timing issue, a UART issue, or some edge case in the transmit logic.
+
+    That is what made it so misleading.
+
+    When an RS-485 bus is left without proper biasing, the line can float during idle conditions. Floating differential lines are exactly the kind of thing that can generate unpredictable symptoms. Receivers can interpret noise as transitions, and fixtures can react to signal conditions that are not actually valid intentional data.
+
+    From the outside, it looked like software unreliability. From the inside, it was an electrical design problem.
+
+    I spent time looking in the wrong places:
+    - transmit timing
+    - frame structure
+    - driver initialization behavior
+    - boot-time UART state
+    - software-side retries and output sequencing
+
+    None of those changed the fundamental problem, because the board itself was missing something required for stable behavior.
+
+    Once bias was added, the flickering issue disappeared.
+
+    That was one of the most useful hardware lessons I have learned so far, because it taught me something broader than just “add the right resistors.” It taught me that when behavior is inconsistent, and especially when it seems mysteriously inconsistent, hardware deserves suspicion much earlier than software developers tend to give it.
+
+    Software bugs often have patterns. Floating electrical states often do not.
+
+    <Callout label="KEY FINDING">
+      There is no firmware fix for a floating bus. When RS-485 idle lines have no bias, receivers interpret noise as valid transitions — and no amount of timing adjustments, retries, or driver changes will fix an electrical problem.
+    </Callout>
+
+    ## What the First Revision Still Did Well
+
+    Even though the first revision had a serious stability problem, it was not a failure. In fact, a lot of the design direction was already correct.
+
+    It proved that the general architecture made sense. It proved that the board could support the ESP32-S3-based controller concept. It proved that the RS-485 output stage was fundamentally the right direction for DMX. And it proved that ordering PCBA, even with a partly manual assembly compromise, was absolutely worth doing compared to staying in breadboard land for longer.
+
+    It also taught me where the prototype still felt rough in use:
+    - too much manual assembly
+    - too much mechanical compromise
+    - too much uncertainty when debugging
+    - too much dependence on “this should probably be fine”
+
+    Those are all signs that a design is still early, even when it technically works.
+
+    ## The Second Revision: The First Stable Prototype
+
+    The second revision was where the board stopped feeling like a workaround and started feeling like a proper prototype.
+
+    The most important change was that it was fully assembled properly by using the integrated approach rather than requiring me to manually solder an ESP32-S3 devkit afterward. That alone made a major difference. It reduced hassle, removed a fragile part of the process, and made the board feel much more coherent as a hardware design.
+
+    This was also the revision where the DMX output became cleaner mechanically. Instead of using screw terminals for an external XLR3 connection, the board had XLR3 DMX directly on the board. That was a major upgrade, not because screw terminals cannot work electrically, but because direct on-board XLR makes the whole device feel more intentional and more robust.
+
+    It reduced loose wiring, improved the physical setup, and moved the design one step closer to something that resembles an actual device rather than a lab prototype.
+
+    Just as importantly, the second revision corrected the stability issue that had defined the first one. With proper biasing in place, the flickering problem was gone. That changed the development experience immediately.
+
+    This is hard to overstate: once the hardware became stable, every other part of the project got easier.
+
+    Before that, strange behavior always reopened the question of whether the board itself could be trusted. After that, I could work on firmware and higher-level behavior with much more confidence. Stable hardware acts as a foundation. Unstable hardware poisons the entire development process because every bug becomes ambiguous.
+
+    That is why I consider the second revision the first stable prototype revision.
+
+    Not the first board that worked.
+    The first board I could actually trust.
+
+    ## Why Stability Matters More Than Feature Count
+
+    One thing hardware taught me quickly is that “more complete” is not the same as “better.”
+
+    The first revision and second revision were not separated by some dramatic architectural reinvention. The second revision was better mainly because it removed uncertainty.
+
+    That matters much more than people often realize.
+
+    A board that has fewer compromises, fewer manual steps, fewer undefined states, and fewer debug traps is worth far more than a board with one extra feature but questionable behavior. Especially in early-stage hardware, stability compounds. Once the foundation is dependable, everything above it becomes faster to develop.
+
+    This was especially relevant in a project like Y-Link, where the board is only one part of a larger system involving firmware, DMX transmission, and eventually higher-level control logic. If the board cannot be trusted, every layer above it becomes harder to reason about.
+
+    ## Lessons I Took from Both Revisions
+
+    There are a few lessons from these first two revisions that I expect to keep applying for a long time.
+
+    ### 1. Partial integration is often worse than it looks
+
+    Using a custom board but still manually soldering on a devkit felt like a reasonable compromise at the time. It reduced perceived risk. But it also kept a lot of prototype pain alive.
+
+    The cleaner solution was to commit more fully to the board itself.
+
+    ### 2. Mechanical decisions matter almost as much as electrical ones
+
+    The move from screw-terminal DMX output to direct on-board XLR3 was not just cosmetic. It made the board more practical, more robust, and more representative of the end goal.
+
+    Good hardware is not only about schematic correctness. It is also about how the board fits into real use.
+
+    ### 3. Undefined electrical states create misleading bugs
+
+    The missing RS-485 bias on the first revision caused the worst kind of problem: one that looks like software. That is the kind of issue that burns time because it sends debugging effort in the wrong direction.
+
+    The lesson is simple: do not leave signal behavior to chance.
+
+    ### 4. Stable prototypes accelerate everything
+
+    The second revision was not exciting because it introduced some flashy new capability. It was exciting because it removed instability. That made all future development more grounded.
+
+    A board you trust is a huge productivity multiplier.
+
+    ## What These Revisions Changed for Me
+
+    Before making these boards, PCB design still felt slightly abstract to me. It was easy to think of it as mostly an exercise in connecting the right nets and getting through DRC cleanly.
+
+    After these two revisions, that view changed.
+
+    PCB design is not just about whether a board can be manufactured. It is about whether the result behaves predictably in the real world, can be assembled without unnecessary pain, and gives you confidence during development instead of constantly undermining it.
+
+    The first revision was important because it exposed the weak points clearly. The second revision was important because it showed what happens when those weak points are fixed properly.
+
+    That is the reason I wanted to write this post in the first place. Early hardware revisions are easy to present as a clean progression where each version simply improves on the last. The reality is messier. Sometimes the main value of a revision is that it teaches you what kind of mistake is capable of consuming weeks of effort.
+
+    In my case, the first revision taught me not to underestimate the basics of bus behavior, and not to confuse “assembled PCB” with “stable platform.” The second revision taught me how much calmer development becomes once the hardware stops fighting you.
+
+    That was the point where the project started to feel real.
+
+</BlogPostLayout>

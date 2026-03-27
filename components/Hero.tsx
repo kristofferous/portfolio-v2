@@ -1,4 +1,4 @@
-
+import AsciiLogo from './AsciiLogo'
 
 export default function Hero() {
   return (
@@ -9,22 +9,31 @@ export default function Hero() {
       <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 40% 50% at 10% 90%, rgba(232,25,44,0.04) 0%, transparent 60%)' }} />
 
       <div className="relative z-10 pt-36">
-        {/* Eyebrow */}
-        <p className={` font-mono uppercase text-red flex items-center gap-4 mb-7`}
-           style={{ fontSize: 11, letterSpacing: '0.22em', opacity: 0, animation: 'fadeUp 0.8s ease 0.15s forwards' }}>
-          <span className="block w-10 h-px bg-red flex-shrink-0" />
-          Based in Kristiansand, Norway &mdash; 19 y/o Founder &amp; Developer
-        </p>
+        <div className="flex items-start gap-12">
+          <div className="flex-1">
+            {/* Eyebrow */}
+            <p className={` font-mono uppercase text-red flex items-center gap-4 mb-7`}
+               style={{ fontSize: 11, letterSpacing: '0.22em', opacity: 0, animation: 'fadeUp 0.8s ease 0.15s forwards' }}>
+              <span className="block w-10 h-px bg-red flex-shrink-0" />
+              Based in Kristiansand, Norway &mdash; 19 y/o Founder &amp; Developer
+            </p>
 
-        {/* Headline */}
-        <h1 className="font-display font-black uppercase flex flex-col"
-            style={{ fontSize: 'clamp(76px,12vw,170px)', lineHeight: 0.88, letterSpacing: '-0.01em',
-                     opacity: 0, animation: 'fadeUp 0.95s ease 0.3s forwards' }}>
-          <span>BUILDING</span>
-          <span>THINGS</span>
-          <span style={{ WebkitTextStroke: '1.5px rgba(240,237,232,0.2)', color: 'transparent' }}>THAT</span>
-          <span className="text-red">MATTER.</span>
-        </h1>
+            {/* Headline */}
+            <h1 className="font-display font-black uppercase flex flex-col"
+                style={{ fontSize: 'clamp(76px,12vw,170px)', lineHeight: 0.88, letterSpacing: '-0.01em',
+                         opacity: 0, animation: 'fadeUp 0.95s ease 0.3s forwards' }}>
+              <span>BUILDING</span>
+              <span>THINGS</span>
+              <span style={{ WebkitTextStroke: '1.5px rgba(240,237,232,0.5)', color: 'transparent' }}>THAT</span>
+              <span className="text-red">MATTER.</span>
+            </h1>
+          </div>
+
+          {/* ASCII logo */}
+          <div className="hidden lg:block flex-shrink-0 ml-auto mr-24 mt-10">
+            <AsciiLogo />
+          </div>
+        </div>
 
         {/* Sub row */}
         <div className="mt-12 flex items-end justify-between gap-10 max-md:flex-col max-md:items-start"
@@ -55,15 +64,15 @@ export default function Hero() {
            style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', opacity: 0, animation: 'fadeIn 1s ease 0.9s forwards' }}>
         {[
           { num: '6+',   label: 'Years Coding'    },
-          { num: '3',    label: 'Active Products'  },
+          { num: '0→1',  label: 'Product Stage'     },
           { num: 'Rust', label: 'Language of 2025' },
           { num: '∞',   label: 'DMX Channels'     },
         ].map((s, i) => (
           <div key={s.label}
                className={`stat-card flex flex-col gap-[6px] py-7 hover:bg-bg-2 transition-colors duration-200
                            ${i < 3 ? 'border-r border-bdr' : ''} max-md:${i===1?'border-r-0':''}`}>
-            <span className="font-display font-black text-fore" style={{ fontSize: 36, lineHeight: 1, letterSpacing: '-0.02em' }}>{s.num}</span>
-            <span className="font-mono text-grey uppercase" style={{ fontSize: 9, letterSpacing: '0.2em' }}>{s.label}</span>
+            <span className="font-display font-black text-fore ml-5" style={{ fontSize: 36, lineHeight: 1, letterSpacing: '-0.02em' }}>{s.num}</span>
+            <span className="font-mono text-grey uppercase ml-5" style={{ fontSize: 9, letterSpacing: '0.2em' }}>{s.label}</span>
           </div>
         ))}
       </div>

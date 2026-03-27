@@ -1,0 +1,186 @@
+import BlogPostLayout from '@/components/BlogPostLayout'
+import Callout from '@/components/mdx/Callout'
+import { Stats, Stat } from '@/components/mdx/Stats'
+
+export const metadata = {
+    title: 'Vibecoding, AI, and the Difference Between Shipping and Understanding — Kristoffer',
+    description: 'Vibecoding started as an honest term for shipping fast with AI. It has since become a broader identity. The real question is not whether AI writes code, but whether you still understand what you are building.',
+}
+
+<BlogPostLayout
+    title="Vibecoding, AI, and the Difference Between Shipping and Understanding"
+    date="Mar 2026"
+    readTime="11 min"
+    tags={['AI', 'Development', 'Claude Code']}
+>
+
+    “Vibecoding” is one of those rare tech terms that stuck because it captured something real before people had time to over-explain it. Andrej Karpathy coined it in early 2025 as a funny, unusually honest description of building with AI: you prompt, the model writes code, you paste error messages back into it, and somehow something working appears on the other side. That framing was useful precisely because it was not pretending to be rigorous. It described a feeling many developers had already experienced.
+
+    Since then, though, vibecoding has expanded from a joke into a broader cultural identity. It no longer just means “I used AI to throw together a prototype.” For some people it now means a whole way of relating to software: less ownership, less understanding, more acceleration, more trust in generated output. That shift is why the term is worth taking seriously.
+
+    Because the real question is not whether vibecoding exists. It obviously does. The better question is whether it is good or bad — and I think the answer depends almost entirely on what role understanding still plays in your workflow.
+
+    ## What Vibecoding Actually Looks Like
+
+    It is easy to caricature vibecoding as “non-technical people typing nonsense into a chatbot and deploying broken apps.” That version exists, but it is not the interesting one, and it is not the one most developers will recognize.
+
+    The real version is more familiar.
+
+    You have a task you do not want to write from scratch. You prompt the model. It gives you something surprisingly close. You patch a few things, rerun it, ask for one more change, and now it mostly works. You keep moving. Maybe you tell yourself you will come back later and understand it properly. Usually you do not.
+
+    That loop is not imaginary. Most developers who use AI heavily have done some version of it. I have. The tools are simply too useful not to. If you are being honest, there are moments where the value is precisely that you do not have to pay the full cognitive cost of writing everything manually.
+
+    That is why vibecoding resonates: it describes a real temptation and a real productivity pattern.
+
+    The loop usually looks something like this:
+    - describe the task in plain language
+    - get code that is 70–90% of the way there
+    - apply a few follow-up prompts
+    - verify the surface behavior
+    - ship it
+    - never fully understand why the final version works
+
+    There is nothing inherently immoral about that. In low-stakes situations, it can be completely rational. For a throwaway script, a quick internal tool, a one-off parser, or some UI glue code you do not plan to revisit, vibecoding can be a good trade. The problem is not that it exists. The problem is that people increasingly talk as if this loop is equivalent to software engineering.
+
+    It is not.
+
+    <Stats>
+        <Stat value="2025" label="Karpathy coined the term" />
+        <Stat value="19% slower" label="METR result for experienced OSS devs using early-2025 AI tools" />
+        <Stat value="1 distinction" label="understanding before prompting vs avoiding it entirely" />
+    </Stats>
+
+    ## The Real Differentiator: Understanding as a Prerequisite vs. Output
+
+    This is the part that matters most.
+
+    The difference between a strong developer using AI and a vibecoder is not that one uses Claude Code, Codex, Cursor, or agents and the other does not. The tools are not the real line.
+
+    The line is intent.
+
+    A developer using AI well understands the problem before prompting. The model is there to accelerate execution. It can draft code, propose alternatives, fill in volume, surface edge cases, or move faster through implementation detail. But the human still owns the shape of the solution. They know what constraints matter. They know what failure would look like. They know why one approach is preferable to another.
+
+    A vibecoder uses AI differently. The point is not acceleration after understanding. The point is to avoid needing understanding at all.
+
+    That distinction sounds subtle, but it changes everything.
+
+    If you understand the problem first, AI compresses effort.
+    If you do not, AI only compresses distance between prompt and output.
+
+    Those are not the same thing.
+
+    Simon Willison made this distinction well in 2025: if an LLM wrote every line of your code, but you reviewed, tested, and understood it all, that is not vibe coding in his book — that is using an LLM as a typing assistant. I think that framing is basically right.
+
+    This is also why so many conversations about AI-assisted development become confused. People argue past each other because they are describing different workflows under the same label.
+
+    One person means:
+    “I use AI constantly, but I still reason about architecture, constraints, interfaces, trade-offs, and failure modes.”
+
+    Another means:
+    “I do not really know how it works, but it passed a quick test and I shipped it.”
+
+    Those are not neighboring points on a single spectrum. They are different relationships to the work.
+
+    ## Where Vibecoding Breaks Down
+
+    Vibecoding breaks down wherever software stops being local.
+
+    It works best when the task is narrow, self-contained, and disposable. It falls apart when the system becomes stateful, long-lived, security-sensitive, multi-layered, or dependent on architecture that has to stay coherent over time.
+
+    The first obvious failure mode is complexity.
+
+    You can vibe a function.
+    You can sometimes vibe a component.
+    You can vibe a script.
+    You cannot vibe a coherent system for very long.
+
+    The reason is simple: systems are not just piles of correct local outputs. They are networks of decisions that need to remain compatible across time, boundaries, and constraints.
+
+    That is exactly where AI-generated output becomes less trustworthy if the human operator is not deeply following along.
+
+    The second failure mode is security.
+
+    A model can generate code that looks plausible while quietly introducing dangerous assumptions, weak validation, unsafe defaults, or dependency choices the prompter never inspected. This is not hypothetical hand-wringing anymore. In July 2025, a widely discussed Replit incident involved an AI agent deleting a production database despite explicit instructions not to make changes without permission. Replit’s CEO later called the behavior unacceptable and said it should never have been possible.
+
+    That incident matters because it exposed the actual risk model. The danger is not only “the AI writes bad code.” The danger is that people grant systems operational trust before they have earned epistemic trust.
+
+    The third failure mode is debugging.
+
+    When something breaks in a vibecoded system, the lack of understanding compounds instantly. You do not just have a bug. You have a bug inside code you did not really design, inside abstractions you did not choose carefully, inside flows you may not even be able to reconstruct without rereading generated output line by line. Debugging becomes archaeology.
+
+    This is why large systems are such a bad match for vibecoding as a governing philosophy.
+
+    The Y-Light engine is a good example from my own work. It is a large Rust codebase, now around 150k lines, with architectural decisions spread across crate boundaries, deterministic behavior requirements, scheduling constraints, internal data contracts, and logic that has to stay coherent across subsystems over time. In a codebase like that, the hard part is not just producing lines of code. The hard part is preserving intent. The hard part is making sure one local decision does not quietly violate a systems-level assumption somewhere else.
+
+    AI is genuinely useful there, but only in bounded ways.
+
+    I can use it to help draft individual functions.
+    I can use it to refactor repetitive logic.
+    I can use it to compare approaches or sanity-check interfaces.
+    I cannot just prompt my way into a coherent engine architecture and trust the result because it compiles.
+
+    That would be indistinguishable from negligence.
+
+    A coherent system has memory. Vibecoding does not.
+
+    There is also a broader caution here. In July 2025, METR published a randomized trial on experienced open-source developers using early-2025 AI tools and found that, on the tasks studied, the developers were actually 19% slower with AI assistance, despite expecting large speedups. That does not prove AI makes developers slower in general, and METR itself updated later results in February 2026 with more mixed findings. But it is a useful warning against naive assumptions. Output speed is not the same as end-to-end productivity, especially once review, correction, integration, and verification are included.
+
+    ## What “Using AI Well” Actually Looks Like
+
+    The most practical thing I have learned is that using AI well is much less about finding one magic model and much more about assigning the right kind of work to the right kind of reasoning.
+
+    My own workflow has converged on a fairly clear split between Claude Code and Codex.
+
+    Claude is better for architectural reasoning, trade-off analysis, decomposition, and “why.” It is useful when the problem is still partly conceptual: what shape should this system have, where should this responsibility live, what invariants matter, what are the risks of this design, what am I probably missing?
+
+    Codex is better for volume. Once the direction is clear, it is extremely useful for implementation throughput: applying repeated patterns, drafting lots of code in the established shape, and pushing through work that is tedious but still well-bounded.
+
+    That is the distinction I keep coming back to:
+    - Claude helps with **why**
+    - Codex helps with **what, at volume**
+
+    This works because the human still owns the framing.
+
+    The dangerous version of AI-assisted development is “model, please decide what I mean.”
+    The productive version is “I know what I mean; now help me execute it faster.”
+
+    In practice, using AI well usually looks like this:
+    - define the problem in your own head first
+    - decide what constraints are non-negotiable
+    - use one model to reason about shape and trade-offs
+    - use another to accelerate implementation volume
+    - inspect interfaces, assumptions, and failure modes yourself
+    - keep ownership of architecture even if you delegate code generation
+
+    That is not vibe coding. It is tool-augmented engineering.
+
+    <Callout label="PRACTICAL TAKEAWAY">
+        AI works best when it amplifies judgment instead of replacing it. The highest-leverage pattern is not “let the model figure it out,” but “use the model after you have already framed the problem correctly.”
+    </Callout>
+
+    ## So Is Vibecoding Bad?
+
+    Not necessarily.
+
+    For throwaway scripts, prototypes, personal tools, experiments, or domains you do not care about deeply owning, vibecoding can be completely fine. Karpathy’s original framing was useful because it admitted this honestly: sometimes you just want to get to the thing.
+
+    I also think there is a reason the term spread so quickly. It names a real shift in software development. AI has changed what it feels like to build, and pretending otherwise is silly.
+
+    But the danger starts when people confuse output speed with competence growth.
+
+    Vibecoding ships fast.
+    Understanding compounds.
+
+    That is the difference.
+
+    If you use AI to accelerate work you already conceptually own, your capability can compound. You learn architecture faster. You compare more options. You implement more ideas. You spend more time on decisions that matter.
+
+    If you use AI mainly to avoid needing understanding, the output may still ship — sometimes impressively fast — but your underlying ability does not grow at the same rate. In many cases it does not grow much at all. You are renting competence one prompt at a time.
+
+    That is why I do not think the important debate is “AI or no AI.” That question is already obsolete.
+
+    The real question is whether your use of AI increases ownership or decreases it.
+
+    That, more than anything, determines whether you are building leverage or just generating artifacts.
+
+</BlogPostLayout>

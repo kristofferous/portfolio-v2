@@ -1,0 +1,309 @@
+import BlogPostLayout from '@/components/BlogPostLayout'
+import Callout from '@/components/mdx/Callout'
+import { Stats, Stat } from '@/components/mdx/Stats'
+
+export const metadata = {
+  title: 'Why I Chose Tauri Over Electron for Y-Link Studio — Kristoffer',
+  description: 'Why I moved Y-Link Studio from Electron to Tauri: lower memory use, faster startup, a stronger Rust backend, and a better fit for a performance-critical desktop app.',
+}
+
+<BlogPostLayout
+  title="Why I Chose Tauri Over Electron for Y-Link Studio"
+  date="Dec 2025"
+  readTime="11 min"
+  tags={['Tauri', 'Rust', 'Desktop']}
+>
+
+  Y-Link Studio ships as a native desktop app, but it did not start there in spirit. Like a lot of desktop software built by web developers, it started with the obvious stack: React for the UI, Electron for the shell, Node.js for the backend side, and a general assumption that this was the fastest route to getting something working.
+
+  And to be fair, it was.
+
+  The Electron version of Studio was not a failed prototype. It was a useful one. It let me move quickly, validate the UI structure, prove the app architecture, and build out enough functionality to understand what the real constraints of the product would be. The problem was that once the app stopped being “just a prototype” and started becoming something I actually wanted to run during real sessions, Electron’s trade-offs became much harder to ignore.
+
+  This post is not an abstract framework comparison. It is not “Electron bad, Tauri good.” Both tools are good. But they are good at different things, and Y-Link Studio gradually became the kind of application where Tauri made more sense.
+
+  The reason I switched was not ideology. It was that Studio is part of a larger real-time system, and Electron was costing too much in the exact places where that mattered.
+
+  ## What Y-Link Studio Actually Needs to Be
+
+  Before talking about frameworks, it helps to define the job of the app.
+
+  Y-Link Studio is not just a generic desktop wrapper around a web UI. It sits near hardware workflows, engine communication, device interaction, and performance-sensitive operations. Even when the frontend looks simple, the app is expected to behave like a serious native tool.
+
+  In practice, that means several things matter at once:
+  - startup time matters because the app should open quickly and predictably
+  - memory footprint matters because it may run alongside heavy software
+  - CPU overhead matters because idle desktop chrome should not compete with actual lighting or audio workloads
+  - backend reliability matters because device communication and orchestration are not side concerns
+  - packaging matters because a small, clean app feels more trustworthy than a huge bundle for a relatively focused tool
+
+  Those requirements did not fully reveal themselves on day one. They became obvious as the project became more real.
+
+  ## Why I Started with Electron
+
+  I started with Electron for the same reason many people do: it is an extremely practical choice.
+
+  If you already know React, TypeScript, Node.js, and standard web tooling, Electron feels like the shortest path between idea and working desktop app. The ecosystem is large, the mental model is familiar, and there are mature packages for an enormous number of common tasks.
+
+  That mattered a lot in the beginning.
+
+  The Electron prototype let me:
+  - build the UI quickly using the same frontend patterns I already liked
+  - use IPC patterns that felt familiar and understandable
+  - prototype hardware-facing behavior without committing too early to a lower-level stack
+  - move fast without having to solve platform-specific systems programming problems upfront
+
+  That is a real advantage. Electron lowers the barrier to shipping a desktop app dramatically, and for many products that is the correct trade.
+
+  In the early phase of Studio, I cared more about iteration speed than runtime elegance. Electron fit that phase well.
+
+  ## The Electron Version Worked — Until the Context Changed
+
+  The Electron version of Studio was functional. The React UI was fine, the IPC layer through `contextBridge` was manageable, and the development loop was straightforward. On paper, there was nothing fundamentally wrong with the app.
+
+  The problem appeared when I looked at the app in the context it would actually live in.
+
+  Studio is not supposed to be the only thing running on the machine. It may exist alongside audio tooling, lighting processes, analysis pipelines, other desktop utilities, and system load that is already non-trivial. In that environment, “the app works” is not enough. It needs to work without being heavy.
+
+  That is where Electron started to feel expensive.
+
+  Even while mostly idle, the Electron build was carrying the cost of a bundled Chromium instance plus the Node.js runtime model around it. That overhead is easy to accept when your app is basically a browser-first product. It is harder to accept when your app is a focused control surface and that overhead is not contributing much actual value.
+
+  The app did not feel broken. It felt wasteful.
+
+  And once I noticed that, it became hard to unsee.
+
+  <Stats>
+    <Stat value="~140MB" label="Electron binary size" />
+    <Stat value="~180MB" label="Electron idle RSS" />
+    <Stat value="~2.1s" label="Electron cold startup" />
+  </Stats>
+
+  ## What Pushed Me Over the Edge
+
+  There was not one dramatic moment where Electron catastrophically failed. The decision was more cumulative than that.
+
+  A few things kept adding up:
+
+  ### 1. Idle cost felt too high
+
+  Desktop software should earn its footprint. If an app is doing heavy rendering, background indexing, or running complex workloads, then high resource use may be justified. But Studio did not need to idle like a full browser environment when not doing much.
+
+  The Electron version consumed enough memory and background overhead that it felt out of proportion to what the app actually was.
+
+  ### 2. Startup responsiveness mattered more than I first assumed
+
+  Studio is not the kind of app where users want a slow, layered boot experience. When you launch a desktop control application, you want it present quickly and predictably. A couple of seconds is not catastrophic, but it is noticeable. Once I started comparing that against what a lighter architecture could offer, Electron’s startup time stopped feeling acceptable.
+
+  ### 3. The backend was already becoming “Rust-shaped”
+
+  Even before the migration, it was becoming clear that the backend side of Studio wanted stronger guarantees, lower-level control, and a better fit for concurrency and systems-style tasks. The more hardware communication, streaming behavior, state coordination, and process management I thought about, the less attractive a Node-first backend felt.
+
+  ### 4. The app was not benefiting enough from Electron’s biggest strength
+
+  Electron’s greatest advantage is usually ecosystem leverage. Need something weird? There is probably a package. Need to move fast? The path is usually short.
+
+  But Y-Link Studio’s pain points were not about missing convenience packages. They were about runtime profile, backend shape, and app feel. Electron’s strongest advantage was simply not the main thing I needed anymore.
+
+  ## Why Tauri Made More Sense
+
+  Tauri changes the trade space in a way that fit Studio much better.
+
+  Instead of bundling Chromium, it uses the operating system’s native webview. Instead of leaning on Node.js as the backend runtime, it uses Rust for the backend process and exposes commands/events across the boundary.
+
+  That shift produced immediate practical benefits.
+
+  <Stats>
+    <Stat value="~8MB" label="Tauri binary size" />
+    <Stat value="~35MB" label="Tauri idle RSS" />
+    <Stat value="~400ms" label="Tauri cold startup" />
+  </Stats>
+
+  These numbers were not synthetic benchmark outputs. They were values I observed during the migration on my own hardware. Exact numbers will always vary by machine and build setup, but the directional change was not subtle.
+
+  The Tauri version felt leaner immediately.
+
+  It opened faster. It consumed less memory. It felt more proportionate to the actual job of the app.
+
+  That was the first big reason the switch felt justified.
+
+  ## The Rust Backend Was Not Just a Bonus
+
+  One mistake people sometimes make when talking about Tauri is treating Rust as an incidental implementation detail. For me, it was one of the main advantages.
+
+  Studio’s backend is not just there to satisfy framework requirements. It has real responsibilities:
+  - serial or device-facing communication
+  - managing IPC with engine processes
+  - coordinating longer-lived state
+  - handling asynchronous operations
+  - supporting workflows that benefit from predictable concurrency and strong typing
+
+  That kind of backend feels natural in Rust.
+
+  Using Rust gave me several things at once:
+  - compile-time guarantees that reduce a whole class of integration mistakes
+  - a much better fit for systems-style logic
+  - strong async support through `tokio`
+  - a clean way to represent frontend/backend boundaries through `serde`
+  - a backend language aligned with the rest of the deeper technical direction of Y-Link
+
+  Tauri’s command model made this especially practical. The frontend could stay in TypeScript/React, while the backend logic moved into a language that fit the app’s responsibilities better.
+
+  A simple example looks like this:
+
+  ```rust
+  #[tauri::command]
+  async fn set_fixture_level(
+      channel: u8,
+      value: u8,
+      state: State<_, EngineState>
+  ) -> Result<(), String> {
+      state.engine.lock().await.set_channel(channel, value);
+      Ok(())
+  }
+````
+
+That is not a dramatic snippet, but it shows the model clearly. The frontend invokes a command. The backend handles real state. The serialization boundary is explicit. The behavior is typed all the way through.
+
+In a Node-based setup, a surprising amount of trust is placed in runtime correctness. In the Rust/Tauri version, more of that trust gets moved into the compiler.
+
+That is not just aesthetically satisfying. It changes how safe larger refactors feel.
+
+## Why the Lower Footprint Actually Matters
+
+It is easy to treat app footprint discussions as micro-optimization or framework tribalism. In some projects, that criticism is fair. In this one, it is not.
+
+Studio is part of a workflow where the machine may already be busy. This is not just a note-taking app or a settings panel sitting alone on an otherwise idle laptop. It is closer to a control application that should stay out of the way while still being dependable.
+
+Lower memory use matters because it reduces pressure on the rest of the system. Lower CPU overhead matters because idle UI infrastructure should not waste cycles. Faster launch matters because operators and developers both feel that latency directly.
+
+Small differences in isolation can become meaningful when the rest of the system is also demanding.
+
+That was the core of the decision: the runtime profile of the framework was not an academic property. It was part of the product experience.
+
+<Callout label="PRACTICAL TAKEAWAY">
+    Electron’s overhead was not intolerable in isolation. It became a problem because Y-Link Studio is meant to coexist with other demanding processes. The framework cost had to be judged in context, not in a vacuum.
+</Callout>
+
+## The Migration Was Not Free
+
+None of this means the migration was painless.
+
+Moving to Tauri solved the problems I actually cared about, but it also introduced new friction that Electron would largely have avoided.
+
+The hardest part was not Rust itself. Rust was demanding, but it was also coherent. The harder part was platform webview reality.
+
+Electron gives you a more uniform rendering environment because you are effectively shipping your own browser. Tauri does not. It uses the system webview, which means platform differences become more relevant.
+
+On macOS, you are dealing with WebKit through `WKWebView`. On Windows, you are dealing with WebView2. Those are both solid platforms, but they are not identical, and the differences show up in places that are annoying rather than dramatic.
+
+I ran into issues like:
+
+* slight CSS behavior differences
+* layout inconsistencies in edge cases
+* different font rendering characteristics
+* platform-specific UI polish work that simply would not exist in the same way under a single bundled Chromium target
+
+None of those were fatal. But they were real.
+
+That is one of the major trade-offs: Tauri reduces runtime cost partly by giving up some environment uniformity.
+
+## The Ecosystem Trade-Off Is Real Too
+
+Electron has a huge ecosystem. That matters.
+
+Tauri’s ecosystem is good, but it is thinner. In some areas it is more than enough. In others, you may discover that the plugin or capability you want either does not exist, is immature, or only solves part of the problem.
+
+That means you need a higher tolerance for building pieces yourself.
+
+For Studio, that showed up especially around system-level integration work. Tasks that might have been close to an `npm install` in Electron sometimes became real implementation work in Tauri.
+
+That is not automatically bad. Sometimes writing the narrower thing you actually need is better than depending on a large package. But it does change the velocity profile of development.
+
+Electron often wins on ecosystem convenience.
+Tauri often wins on runtime profile and backend fit.
+
+Which one matters more depends entirely on the app.
+
+## The Frontend Story Stayed Familiar
+
+One reason the migration was reasonable rather than overwhelming is that I did not have to throw away the frontend development model I liked.
+
+The UI could still be built with React and TypeScript. I still got a modern frontend workflow. I still got component-driven UI development. That continuity mattered, because it meant the migration was not “rewrite the whole app in a different paradigm.” It was more like replacing the runtime shell and backend shape while preserving the productive frontend layer.
+
+That combination ended up being one of Tauri’s best qualities for this project:
+
+* web-style frontend productivity
+* native-feeling desktop packaging
+* Rust where systems behavior actually matters
+
+It let each part of the stack play to its strengths.
+
+## Would I Recommend Tauri by Default?
+
+No.
+
+I would not recommend Tauri as a universal replacement for Electron, just like I would not recommend Electron as the correct answer for every desktop app.
+
+The better question is: what constraints does the app actually have?
+
+Electron is still a strong choice when:
+
+* you want maximum ecosystem leverage
+* you need to move very quickly
+* install size is not especially important
+* uniform browser behavior across platforms is a major advantage
+* the backend side of the app does not need strong systems-level guarantees
+
+Tauri is a strong choice when:
+
+* memory footprint matters
+* startup time matters
+* binary size matters
+* you want a Rust backend for real reasons, not as a novelty
+* your app benefits from being closer to a native-feeling utility than a browser-packaged application
+
+Y-Link Studio moved from the first category into the second.
+
+That is why the answer changed.
+
+## What I Would Do Differently Next Time
+
+If I were starting a similar project again, I would spend more time upfront defining the operational profile of the app before defaulting to the most familiar framework.
+
+Early on, it is tempting to think:
+“I just need something working.”
+That is often correct.
+
+But once a desktop app sits in the middle of a resource-sensitive workflow, framework cost stops being abstract. It becomes part of the app’s design.
+
+So the question I would ask earlier now is not just:
+“What helps me build fastest?”
+It is:
+“What kind of application is this becoming?”
+
+If the answer points toward a lightweight control app with systems responsibilities, Tauri deserves serious consideration much earlier.
+
+## Would I Choose Tauri Again?
+
+Yes, for Studio, absolutely.
+
+Not because Electron is bad.
+Not because Tauri is trendy.
+And not because Rust automatically makes everything better.
+
+I would choose it again because the migration solved the problems that were actually hurting the product:
+
+* too much overhead
+* too much unnecessary runtime weight
+* a backend model that no longer matched the direction of the app
+* a desktop experience that felt heavier than it should
+
+Tauri gave me a smaller, faster, more appropriate shell for the application Studio was becoming.
+
+That was the real decision.
+
+Electron helped me get there quickly.
+Tauri was what made it feel right.
+
+</BlogPostLayout>

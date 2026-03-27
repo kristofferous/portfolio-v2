@@ -4,13 +4,11 @@ import { useReveal } from '@/hooks/useReveal'
 const langColors: Record<string,string> = { 'Rust':'#CE422B', 'TypeScript':'#3178C6', 'HTML / JS':'#E34C26' }
 
 const repos = [
-  { name:'y-light-engine',       lang:'Rust',        status:'Private / WIP', link:null,
-    desc:'Core Rust engine powering Y-Link. ALPINE execution layer, beat/spectral analysis, scene evaluation, telemetry pipeline.' },
-  { name:'dmx-capacity-calculator', lang:'TypeScript', status:'Public',       link:'https://y-link.no',
-    desc:'Linkable web tool for calculating DMX universe capacity. Built as a backlink SEO asset for y-link.no.' },
-  { name:'axentra-raid-calc',     lang:'HTML / JS',   status:'Public',        link:null,
-    desc:'Shopify-embeddable RAID calculator widget. Scoped CSS, light mode monochrome, zero dependencies.' },
-  { name:'nerskogen.com',         lang:'TypeScript',  status:'Public',        link:'https://github.com',
+  { name:'ALPINE',       lang:'Rust',        status:'Public', link:'https://github.com/alpine-core/protocol',
+    desc:'Core lighting network protocol powering Y-Link. An encrypted and fast alternative to sACN and Art-Net with native discovery and identity' },
+  { name:'timerapportering-app',     lang:'TypeScript',  status:'Public',        link:'https://github.com/kristofferous/timerapportering-app',
+    desc:'Desktop time-tracking app for Windows and Linux built with Tauri 2 and Next.js. Clock in/out, manual backlog, monthly overview, weekly charts, and automatic Norwegian supplementary pay calculations.' },
+  { name:'nerskogen.com',         lang:'TypeScript',  status:'Public',        link:'https://github.com/kristofferous/portfolio-v2',
     desc:'This portfolio — built with Next.js 14 App Router, Tailwind CSS, Barlow Condensed, and zero UI libraries.' },
 ]
 

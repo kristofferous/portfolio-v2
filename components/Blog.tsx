@@ -2,12 +2,9 @@
 import { useReveal } from '@/hooks/useReveal'
 
 const posts = [
-  { date:'Mar 2026', readTime:'12 min', slug:'/blog/building-ai-driven-dmx-lighting-engine-rust', tags:['Rust','AI','DMX'],
-    title:'Building an AI-Driven DMX Lighting Engine in Rust',
-    excerpt:'How I designed the ALPINE execution layer, integrated beat detection via CMSIS-DSP, and architected a rule-based scene evaluation system for real-time autonomous light shows.' },
-  { date:'Feb 2026', readTime:'9 min',  slug:'/blog/music-to-motion-track-identity-real-time', tags:['Architecture','Audio','TypeScript'],
-    title:'Music-to-Motion: Resolving Track Identity in Real Time',
-    excerpt:'A deep dive into the MTM system — OS media session APIs, MusicBrainz fallback, AcoustID fingerprinting, and how loopback audio saves us when everything else fails.' },
+  { date:'Mar 2026', readTime:'11 min', slug:'/blog/vibecoding-ai-understanding-vs-output', tags:['AI','Development','Claude Code'],
+    title:'Vibecoding, AI, and the Difference Between Shipping and Understanding',
+    excerpt:'Vibecoding started as an honest term for shipping fast with AI. It has since become a broader identity. The real question is not whether AI writes code, but whether you still understand what you are building.' },
   { date:'Jan 2026', readTime:'8 min',  slug:'/blog/first-pcb-lessons-y1-proto-rev-a', tags:['PCB','Hardware','ESP32'],
     title:'My First PCB: Lessons from the Y1-Proto-Rev_A',
     excerpt:'What I learned designing and manufacturing a custom ESP32-S3 + MAX3485 DMX controller board through JLCPCB — from KiCad footprints to a working prototype unit.' },

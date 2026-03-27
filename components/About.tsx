@@ -44,7 +44,7 @@ export default function About() {
             </div>
             <p className="text-[13px] text-fore/50 leading-[1.7] border-t border-bdr pt-4 mb-4">
               Kristiansand, Norway · 19 y/o<br />
-              Running NH-Solutions &amp; building Y-Link
+              Founder &amp; building Y-Link
             </p>
             <div className="flex gap-5">
               {['https://nerskogen.com','https://y-link.no'].map(url => (
@@ -61,8 +61,8 @@ export default function About() {
           <div className="grid grid-cols-2 gap-px bg-bdr border border-bdr">
             {[
               { num: '6+', label: 'Years Coding'   },
-              { num: '3',  label: 'Active Products' },
-              { num: '2019', label: 'First Commit'  },
+              { num: '0→1', label: 'Product Stage'  },
+              { num: '2021', label: 'First Commit'  },
               { num: '∞',  label: 'DMX Channels'   },
             ].map(s => (
               <div key={s.label} className="stat-card bg-bg-2 p-6 flex flex-col gap-[6px] hover:bg-bg-3 transition-colors duration-200">

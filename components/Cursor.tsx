@@ -1,11 +1,15 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function Cursor() {
   const dotRef  = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(false)
 
   useEffect(() => {
+    if (!window.matchMedia('(pointer: fine)').matches) return
+    setActive(true)
+
     let mx = 0, my = 0, rx = 0, ry = 0
     let rafId: number
     const onMove = (e: MouseEvent) => { mx = e.clientX; my = e.clientY }
@@ -25,7 +29,7 @@ export default function Cursor() {
       dotRef.current  && Object.assign(dotRef.current.style,  { width: '10px', height: '10px' })
       ringRef.current && Object.assign(ringRef.current.style, { width: '36px', height: '36px', borderColor: 'rgba(232,25,44,0.4)' })
     }
-    const attach = () => document.querySelectorAll('a,button,.project-row,.skill-card,.stat-card,.os-card,.learn-card,.blog-row').forEach(el => {
+    const attach = () => document.querySelectorAll('a,button,.project-row,.skill-card,.stat-card,.os-card,.learn-card,.blog-row,.work-card').forEach(el => {
       el.addEventListener('mouseenter', grow); el.addEventListener('mouseleave', shrink)
     })
     attach()
@@ -33,6 +37,8 @@ export default function Cursor() {
     mo.observe(document.body, { childList: true, subtree: true })
     return () => { document.removeEventListener('mousemove', onMove); cancelAnimationFrame(rafId); mo.disconnect() }
   }, [])
+
+  if (!active) return null
 
   const base = 'fixed pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 rounded-full transition-[width,height] duration-200'
   return (

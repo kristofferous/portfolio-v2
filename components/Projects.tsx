@@ -14,16 +14,12 @@ const LockIcon = () => (
 )
 
 const projects = [
-  { num:'01', name:'Y-Link',          tags:['Rust','AI / ML','DMX','Embedded'],       link:'https://y-link.no',
-    desc:'An AI-driven DMX lighting ecosystem for the AV and entertainment market. Autonomously generates professional light shows in real time — beat detection, scene selection, moving head choreography. Priced at 5,000 NOK vs competitors at ~12,000 NOK.' },
-  { num:'02', name:'Y-Link Studio',   tags:['Tauri','Next.js','Three.js','TypeScript'], link:'https://y-link.no',
+  { num:'01', name:'Y-Link',        tags:['Rust','AI / ML','DMX','ESP32-S3','PCB','Embedded'], link:'https://y-link.no',
+    desc:'AI-driven DMX lighting ecosystem for the AV and entertainment market. Autonomously generates professional light shows in real time — beat detection, scene selection, moving head choreography. Powered by ALPINE, a deterministic Rust execution engine with real-time beat analysis via CMSIS-DSP and a custom ESP32-S3 PCB with MAX3485 line driver. Priced at 5,000 NOK vs competitors at ~12,000 NOK.' },
+  { num:'02', name:'Y-Link Studio', tags:['Tauri','Next.js','Three.js','TypeScript'],           link:'https://y-link.no',
     desc:'Desktop control application for Y-Link. 3D fixture placement editor, 2D fixture painter, real-time DMX patch grid, AI Show Conductor interface, and Music-To-Motion track resolution via SMTC/MPRIS and MusicBrainz.' },
-  { num:'03', name:'Y-Light Engine',  tags:['Rust','RL / AI','sACN','ALPINE'],         link:null,
-    desc:'The Rust-powered DMX execution engine behind Y-Link. ALPINE deterministic execution layer, real-time beat analysis via CMSIS-DSP, rule-based scene evaluation, and a telemetry pipeline feeding a future RL training loop.' },
-  { num:'04', name:'Y1-Proto-Rev_A',  tags:['ESP32-S3','PCB','MAX3485','KiCad'],       link:null,
-    desc:'Custom PCB hardware for Y-Link. ESP32-S3-N16R8 as main MCU, MAX3485 DMX line driver, USB-C power input, single 3-pin DMX output. Custom aluminum chassis via JLCPCB. 3 prototype units produced.' },
-  { num:'05', name:'Axentra',         tags:['Shopify','Next.js','SEO','Liquid'],        link:'https://axentra.no',
-    desc:'IT and e-commerce work for a Norwegian refurbished enterprise hardware retailer. SEO keyword strategy, custom RAID calculator as a Shopify-embeddable widget, breadcrumb Liquid snippets, and headless Storefront API architecture.' },
+  { num:'03', name:'Flittig UB',    tags:['Next.js', 'NestJs','TypeScript','Stripe','MariaDB'],        link:null,
+    desc:'Full-stack marketplace app built for a Norwegian youth enterprise (ungdomsbedrift). Adults post local jobs — lawn mowing, house painting, odd tasks — and youth users claim and complete them. Integrated Stripe for in-app payments. Built solo end-to-end.' },
 ]
 
 export default function Projects() {

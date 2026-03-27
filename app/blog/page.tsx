@@ -1,27 +1,63 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import fs from 'fs'
+import path from 'path'
 
 export const metadata: Metadata = {
   title: 'Blog — Kristoffer',
   description: 'Writing on Rust, embedded systems, AI-driven software, and building products.',
 }
 
-const posts = [
-  { date: 'Mar 2026', readTime: '12 min', slug: 'building-ai-driven-dmx-lighting-engine-rust', tags: ['Rust', 'AI', 'DMX'],
-    title: 'Building an AI-Driven DMX Lighting Engine in Rust',
-    excerpt: 'How I designed the ALPINE execution layer, integrated beat detection via CMSIS-DSP, and architected a rule-based scene evaluation system for real-time autonomous light shows.' },
-  { date: 'Feb 2026', readTime: '9 min', slug: 'music-to-motion-track-identity-real-time', tags: ['Architecture', 'Audio', 'TypeScript'],
-    title: 'Music-to-Motion: Resolving Track Identity in Real Time',
-    excerpt: 'A deep dive into the MTM system — OS media session APIs, MusicBrainz fallback, AcoustID fingerprinting, and how loopback audio saves us when everything else fails.' },
-  { date: 'Jan 2026', readTime: '8 min', slug: 'first-pcb-lessons-y1-proto-rev-a', tags: ['PCB', 'Hardware', 'ESP32'],
-    title: 'My First PCB: Lessons from the Y1-Proto-Rev_A',
-    excerpt: 'What I learned designing and manufacturing a custom ESP32-S3 + MAX3485 DMX controller board through JLCPCB — from KiCad footprints to a working prototype unit.' },
-  { date: 'Dec 2025', readTime: '6 min', slug: 'why-tauri-over-electron-y-link-studio', tags: ['Tauri', 'Rust', 'Desktop'],
-    title: 'Why I Chose Tauri Over Electron for Y-Link Studio',
-    excerpt: 'Memory footprint, startup time, and the Rust backend story. A practical comparison after actually shipping both approaches.' },
-]
+interface PostMeta {
+  slug: string
+  title: string
+  date: string
+  readTime: string
+  tags: string[]
+  excerpt: string
+}
+
+function parsePost(slug: string): PostMeta | null {
+  const mdxPath = path.join(process.cwd(), 'app/blog', slug, 'page.mdx')
+  if (!fs.existsSync(mdxPath)) return null
+
+  const content = fs.readFileSync(mdxPath, 'utf-8')
+
+  const titleMatch = content.match(/title="([^"]+)"/)
+  const dateMatch = content.match(/date="([^"]+)"/)
+  const readTimeMatch = content.match(/readTime="([^"]+)"/)
+  // Match tags={[...]} — outer braces aren't regex-special outside classes
+  const tagsMatch = content.match(/tags=[{]([^}]+)[}]/)
+  const descMatch = content.match(/description:\s*['"](.+?)['"]/)
+
+  if (!titleMatch || !dateMatch || !readTimeMatch || !tagsMatch) return null
+
+  const tags = Array.from(tagsMatch[1].matchAll(/['"]([^'"]+)['"]/g)).map(m => m[1])
+
+  return {
+    slug,
+    title: titleMatch[1],
+    date: dateMatch[1],
+    readTime: readTimeMatch[1],
+    tags,
+    excerpt: descMatch?.[1] ?? '',
+  }
+}
+
+function getAllPosts(): PostMeta[] {
+  const blogDir = path.join(process.cwd(), 'app/blog')
+  const slugs = fs.readdirSync(blogDir, { withFileTypes: true })
+    .filter(e => e.isDirectory())
+    .map(e => e.name)
+
+  return slugs
+    .map(parsePost)
+    .filter((p): p is PostMeta => p !== null)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+}
 
 export default function BlogIndex() {
+  const posts = getAllPosts()
   return (
     <main className="min-h-screen bg-bg text-fore py-[120px] px-[60px] max-md:py-20 max-md:px-7">
       <Link href="/#blog" className="inline-flex items-center gap-3 font-mono text-grey uppercase mb-12

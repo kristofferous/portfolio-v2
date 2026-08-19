@@ -2,9 +2,9 @@
 import { useReveal } from '@/hooks/useReveal'
 
 const events = [
-  { year:'2026', title:'University Prep',  role:'Student',              current:true,
-    desc:'Preparing for a 5-year program spanning mathematics, algorithms, data engineering, and physics. Actively studying Matematikk R2.',
-    tags:['Math','Algorithms','Physics'] },
+    { year:'2026', title:'OsloMet',          role:'Data Engineering',    current:true,
+        desc:'Started the BSc in Data Engineering at OsloMet — discrete mathematics, programming, web development, and technology in society. Considering a master\'s to follow.',
+        tags:['Math','Algorithms','Web','Programming'] },
   { year:'2025', title:'Axentra',          role:'IT & Hardware',
     desc:'Part-time IT and hardware role at a Norwegian e-commerce business selling refurbished enterprise servers. SEO, Shopify tooling, and headless architecture.',
     tags:['IT','SEO','Next.js','Shopify'] },

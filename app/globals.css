@@ -148,7 +148,7 @@ body::before {
   }
 
   .prose-blog h2::before {
-    content: counter(section, decimal-leading-zero) ' —';
+    content: counter(section, decimal-leading-zero) ' /';
     display: block;
     font-family: var(--font-dm-mono);
     font-size: 10px;
@@ -209,7 +209,7 @@ body::before {
   }
   .prose-blog ul li { @apply relative pl-5; }
   .prose-blog ul li::before {
-    content: '—';
+    content: '-';
     @apply absolute left-0 text-red font-mono;
     font-size: 11px;
     top: 3px;

@@ -1,15 +1,13 @@
 'use client'
 import { useReveal } from '@/hooks/useReveal'
 
-const langColors: Record<string,string> = { 'Rust':'#CE422B', 'TypeScript':'#3178C6', 'HTML / JS':'#E34C26' }
+const langColors: Record<string,string> = { 'TypeScript':'#3178C6', 'Java':'#B07219', 'Python':'#3572A5', 'HTML / JS':'#E34C26' }
 
 const repos = [
-  { name:'ALPINE',       lang:'Rust',        status:'Public', link:'https://github.com/alpine-core/protocol',
-    desc:'Core lighting network protocol powering Y-Link. An encrypted and fast alternative to sACN and Art-Net with native discovery and identity' },
   { name:'timerapportering-app',     lang:'TypeScript',  status:'Public',        link:'https://github.com/kristofferous/timerapportering-app',
     desc:'Desktop time-tracking app for Windows and Linux built with Tauri 2 and Next.js. Clock in/out, manual backlog, monthly overview, weekly charts, and automatic Norwegian supplementary pay calculations.' },
   { name:'nerskogen.com',         lang:'TypeScript',  status:'Public',        link:'https://github.com/kristofferous/portfolio-v2',
-    desc:'This portfolio — built with Next.js 14 App Router, Tailwind CSS, Barlow Condensed, and zero UI libraries.' },
+    desc:'This portfolio, built with Next.js 14 App Router, Tailwind CSS, Barlow Condensed, and zero UI libraries.' },
 ]
 
 export default function OpenSource() {

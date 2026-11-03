@@ -3,13 +3,13 @@ import type { Metadata } from 'next'
 import { getAllPosts } from '@/lib/blog'
 
 export const metadata: Metadata = {
-  title: 'Blog — Kristoffer',
+  title: 'Blog | Kristoffer',
   description: 'Writing on Rust, embedded systems, AI-driven software, and building products.',
   alternates: {
     canonical: 'https://nerskogen.com/blog',
   },
   openGraph: {
-    title: 'Blog — Kristoffer',
+    title: 'Blog | Kristoffer',
     description: 'Writing on Rust, embedded systems, AI-driven software, and building products.',
     url: 'https://nerskogen.com/blog',
     siteName: 'nerskogen.com',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog — Kristoffer',
+    title: 'Blog | Kristoffer',
     description: 'Writing on Rust, embedded systems, AI-driven software, and building products.',
   },
 }

@@ -2,18 +2,20 @@
 import { useReveal } from '@/hooks/useReveal'
 
 const skills = [
-  { name:'Rust',       type:'Systems / Firmware', level:85 },
-  { name:'TypeScript', type:'Language',            level:92 },
-  { name:'Next.js',    type:'Web Framework',       level:88 },
-  { name:'React',      type:'UI',                  level:90 },
-  { name:'Tauri',      type:'Desktop Apps',        level:78 },
-  { name:'ESP32',      type:'Embedded / MCU',      level:70 },
-  { name:'PCB Design', type:'Hardware',            level:55 },
-  { name:'Three.js',   type:'3D / WebGL',          level:72 },
-  { name:'AI / ML',    type:'Inference & RL',      level:65 },
-  { name:'DMX / sACN', type:'AV Protocols',        level:88 },
-  { name:'Arch Linux', type:'OS / DevOps',         level:80 },
-  { name:'Supabase',   type:'Backend / DB',        level:82 },
+  { name:'Java',       type:'Language',            level:80 },
+  { name:'TypeScript', type:'Language',            level:80 },
+  { name:'Python',     type:'Language',            level:65 },
+  { name:'React',      type:'UI',                  level:75 },
+  { name:'Next.js',    type:'Web Framework',       level:75 },
+  { name:'AI Agents',  type:'Agentic Development', level:80 },
+  { name:'Git',        type:'Version Control',     level:75 },
+  { name:'SQL',        type:'Databases',           level:60 },
+  { name:'Supabase',   type:'Backend / DB',        level:65 },
+  { name:'Tauri',      type:'Desktop Apps',        level:50 },
+  { name:'Three.js',   type:'3D / WebGL',          level:45 },
+  { name:'ESP32',      type:'Embedded / MCU',      level:45 },
+  { name:'PCB Design', type:'Hardware',            level:40 },
+  { name:'AI / ML',    type:'Inference & RL',      level:30 },
 ]
 
 export default function Skills() {

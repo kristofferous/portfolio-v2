@@ -56,7 +56,7 @@ function parsePost(slug: string): PostMeta | null {
   const titleMatch = content.match(/title="([^"]+)"/)
   const dateMatch = content.match(/date="([^"]+)"/)
   const readTimeMatch = content.match(/readTime="([^"]+)"/)
-  // Match tags={[...]} — outer braces are literal in this pattern.
+  // Match tags={[...]}; outer braces are literal in this pattern.
   const tagsMatch = content.match(/tags=[{]([^}]+)[}]/)
   const descMatch = content.match(/description:\s*['"](.+?)['"]/)
 

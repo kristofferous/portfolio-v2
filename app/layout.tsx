@@ -27,9 +27,9 @@ const BASE_URL = 'https://nerskogen.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  title: 'Kristoffer — Developer & Founder',
-  description: 'Portfolio of Kristoffer — a 19-year-old developer and founder from Norway building AI-driven software, embedded systems, and products.',
-  keywords: ['Kristoffer', 'developer', 'founder', 'Norway', 'portfolio', 'Rust', 'embedded systems', 'AI', 'Next.js', 'TypeScript', 'nerskogen'],
+  title: 'Kristoffer · Developer',
+  description: 'Portfolio of Kristoffer, a developer and Data Engineering student at OsloMet in Oslo, Norway.',
+  keywords: ['Kristoffer', 'developer', 'Oslo', 'OsloMet', 'Norway', 'portfolio', 'Java', 'Python', 'embedded systems', 'AI', 'Next.js', 'TypeScript', 'nerskogen'],
   authors: [{ name: 'Kristoffer', url: BASE_URL }],
   creator: 'Kristoffer',
   robots: {
@@ -47,8 +47,8 @@ export const metadata: Metadata = {
     canonical: BASE_URL,
   },
   openGraph: {
-    title: 'Kristoffer — Developer & Founder',
-    description: 'Building things that matter.',
+    title: 'Kristoffer · Developer',
+    description: 'Developer and Data Engineering student at OsloMet.',
     url: BASE_URL,
     siteName: 'nerskogen.com',
     locale: 'en_US',
@@ -56,8 +56,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Kristoffer — Developer & Founder',
-    description: 'Portfolio of Kristoffer — a 19-year-old developer and founder from Norway building AI-driven software, embedded systems, and products.',
+    title: 'Kristoffer · Developer',
+    description: 'Portfolio of Kristoffer, a developer and Data Engineering student at OsloMet in Oslo, Norway.',
   },
 }
 
@@ -67,9 +67,9 @@ const personJsonLd = {
   name: 'Kristoffer',
   url: BASE_URL,
   sameAs: [BASE_URL],
-  jobTitle: 'Developer & Founder',
-  description: 'A 19-year-old developer and founder from Norway building AI-driven software, embedded systems, and products.',
-  knowsAbout: ['Rust', 'Embedded Systems', 'Artificial Intelligence', 'Next.js', 'TypeScript', 'Hardware Design'],
+  jobTitle: 'Developer & Data Engineering Student',
+  description: 'A developer and Data Engineering student at OsloMet in Oslo, Norway.',
+  knowsAbout: ['Java', 'Python', 'TypeScript', 'Embedded Systems', 'Artificial Intelligence', 'Next.js', 'Hardware Design'],
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

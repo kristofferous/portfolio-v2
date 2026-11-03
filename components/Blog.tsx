@@ -7,7 +7,7 @@ const posts = [
     excerpt:'Vibecoding started as an honest term for shipping fast with AI. It has since become a broader identity. The real question is not whether AI writes code, but whether you still understand what you are building.' },
   { date:'Jan 2026', readTime:'8 min',  slug:'/blog/first-pcb-lessons-y1-proto-rev-a', tags:['PCB','Hardware','ESP32'],
     title:'My First PCB: Lessons from the Y1-Proto-Rev_A',
-    excerpt:'What I learned designing and manufacturing a custom ESP32-S3 + MAX3485 DMX controller board through JLCPCB — from KiCad footprints to a working prototype unit.' },
+    excerpt:'What I learned designing and manufacturing a custom ESP32-S3 + MAX3485 DMX controller board through JLCPCB, from KiCad footprints to a working prototype unit.' },
   { date:'Dec 2025', readTime:'6 min',  slug:'/blog/why-tauri-over-electron-y-link-studio', tags:['Tauri','Rust','Desktop'],
     title:'Why I Chose Tauri Over Electron for Y-Link Studio',
     excerpt:'Memory footprint, startup time, and the Rust backend story. A practical comparison after actually shipping both approaches.' },

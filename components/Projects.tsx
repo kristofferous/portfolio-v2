@@ -14,12 +14,12 @@ const LockIcon = () => (
 )
 
 const projects = [
-  { num:'01', name:'Y-Link',        tags:['Rust','AI / ML','DMX','ESP32-S3','PCB','Embedded'], link:'https://y-link.no',
-    desc:'AI-driven DMX lighting ecosystem for the AV and entertainment market. Autonomously generates professional light shows in real time — beat detection, scene selection, moving head choreography. Powered by ALPINE, a deterministic Rust execution engine with real-time beat analysis via CMSIS-DSP and a custom ESP32-S3 PCB with MAX3485 line driver. Priced at 5,000 NOK vs competitors at ~12,000 NOK.' },
+  { num:'01', name:'Y-Link',        tags:['Rust','sACN','DMX','ESP32-S3','PCB','AI Agents'], link:'https://y-link.no',
+    desc:'DMX lighting controller that generates light shows from music in real time, with beat detection, scene selection, and moving head movement. Written in Rust, outputs sACN, and runs on a custom ESP32-S3 board with a MAX3485 line driver. Built together with AI coding agents: I plan the architecture and break down the work, the agents write much of the code, and I review and test it. Priced at 5,000 NOK vs competitors at ~12,000 NOK.' },
   { num:'02', name:'Y-Link Studio', tags:['Tauri','Next.js','Three.js','TypeScript'],           link:'https://y-link.no',
     desc:'Desktop control application for Y-Link. 3D fixture placement editor, 2D fixture painter, real-time DMX patch grid, AI Show Conductor interface, and Music-To-Motion track resolution via SMTC/MPRIS and MusicBrainz.' },
   { num:'03', name:'Flittig UB',    tags:['Next.js', 'NestJs','TypeScript','Stripe','MariaDB'],        link:null,
-    desc:'Full-stack marketplace app built for a Norwegian youth enterprise (ungdomsbedrift). Adults post local jobs — lawn mowing, house painting, odd tasks — and youth users claim and complete them. Integrated Stripe for in-app payments. Built solo end-to-end.' },
+    desc:'Full-stack marketplace app built for a Norwegian youth enterprise (ungdomsbedrift). Adults post local jobs (lawn mowing, house painting, odd tasks) and youth users claim and complete them. Integrated Stripe for in-app payments. Built solo end-to-end.' },
 ]
 
 export default function Projects() {

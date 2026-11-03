@@ -3,8 +3,8 @@ import Callout from '@/components/mdx/Callout'
 import { Stats, Stat } from '@/components/mdx/Stats'
 
 export const metadata = {
-    title: 'My First PCBs: Lessons from the First and Second Y-Link Hardware Revisions — Kristoffer',
-    description: 'What I learned designing my first two Y-Link DMX controller boards — from manually soldering an ESP32-S3 devkit onto the first revision to finally reaching a stable prototype in the second.',
+    title: 'My First PCBs: Lessons from the First and Second Y-Link Hardware Revisions | Kristoffer',
+    description: 'What I learned designing my first two Y-Link DMX controller boards, from manually soldering an ESP32-S3 devkit onto the first revision to finally reaching a stable prototype in the second.',
 }
 
 <BlogPostLayout
@@ -18,7 +18,7 @@ export const metadata = {
 
     This post is about those first two board revisions.
 
-    The first revision taught me what happens when a board is technically functional but still unstable in ways that waste enormous amounts of time. The second revision was the first one that actually felt solid — not perfect, not final, but stable enough that I could stop doubting the hardware every time something strange happened.
+    The first revision taught me what happens when a board is technically functional but still unstable in ways that waste enormous amounts of time. The second revision was the first one that actually felt solid: not perfect, not final, but stable enough that I could stop doubting the hardware every time something strange happened.
 
     Looking back, the lessons were not mostly about routing, or footprint libraries, or even manufacturing. The biggest lessons were about design decisions that seem small on paper but completely change how a board behaves in reality.
 
@@ -95,7 +95,7 @@ export const metadata = {
     Software bugs often have patterns. Floating electrical states often do not.
 
     <Callout label="KEY FINDING">
-      There is no firmware fix for a floating bus. When RS-485 idle lines have no bias, receivers interpret noise as valid transitions — and no amount of timing adjustments, retries, or driver changes will fix an electrical problem.
+      There is no firmware fix for a floating bus. When RS-485 idle lines have no bias, receivers interpret noise as valid transitions, and no amount of timing adjustments, retries, or driver changes will fix an electrical problem.
     </Callout>
 
     ## What the First Revision Still Did Well

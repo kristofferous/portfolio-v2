@@ -1,13 +1,13 @@
-# nerskogen.com — Portfolio
+# nerskogen.com: Portfolio
 
 Personal portfolio for Kristoffer. Built with Next.js 14 App Router + Tailwind CSS. Zero UI libraries.
 
 ## Stack
 
-- **Next.js 14** — App Router, TypeScript
-- **Tailwind CSS v3** — utility-first, no component libraries
-- **Fonts** — Barlow Condensed (display), DM Sans (body), DM Mono (labels) via `next/font/google`
-- **Animations** — CSS keyframes + IntersectionObserver scroll reveals, no animation library
+- **Next.js 14**: App Router, TypeScript
+- **Tailwind CSS v3**: utility-first, no component libraries
+- **Fonts**: Barlow Condensed (display), DM Sans (body), DM Mono (labels) via `next/font/google`
+- **Animations**: CSS keyframes + IntersectionObserver scroll reveals, no animation library
 
 ## Getting Started
 
@@ -36,7 +36,7 @@ components/
   Skills.tsx        # Auto-fill grid with animated progress bars
   Projects.tsx      # Vertical list rows with left-bar slide reveal
   OpenSource.tsx    # Repo cards with lang colour dots + public/private badges
-  Blog.tsx          # Post rows (placeholder — swap for MDX)
+  Blog.tsx          # Post rows (placeholder: swap for MDX)
   Learning.tsx      # Currently learning grid with progress bars
   Contact.tsx       # Centered contact with email CTA
   Footer.tsx        # Simple footer
@@ -49,10 +49,10 @@ tailwind.config.ts  # Custom colours, fonts, screens
 
 ## Customisation
 
-- **Brand colours** — edit `tailwind.config.ts` → `colors.red`, `colors.bg`
-- **Content** — all data is hardcoded inline in each component; easy to find and edit
-- **GitHub URL** — search for `https://github.com` and replace with your real profile
-- **Blog** — swap placeholder posts in `Blog.tsx` for real MDX-powered entries when ready
+- **Brand colours**: edit `tailwind.config.ts` → `colors.red`, `colors.bg`
+- **Content**: all data is hardcoded inline in each component; easy to find and edit
+- **GitHub URL**: search for `https://github.com` and replace with your real profile
+- **Blog**: swap placeholder posts in `Blog.tsx` for real MDX-powered entries when ready
 
 ## Deployment
 
@@ -60,4 +60,4 @@ tailwind.config.ts  # Custom colours, fonts, screens
 npm run build
 ```
 
-Deploy to Vercel — just connect the repo and it works out of the box.
+Deploy to Vercel: just connect the repo and it works out of the box.

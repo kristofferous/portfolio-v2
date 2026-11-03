@@ -1,6 +1,6 @@
 const items = [
-  'Rust','TypeScript','Next.js','Tauri','ESP32-S3','Three.js',
-  'Supabase','ALPINE','sACN / DMX','PCB Design','Arch Linux','AI / ML',
+  'Java','TypeScript','Python','Next.js','Tauri','ESP32-S3','Three.js',
+  'Supabase','sACN / DMX','PCB Design','macOS','AI / ML',
 ]
 
 export default function TechBar() {

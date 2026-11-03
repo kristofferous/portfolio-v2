@@ -15,17 +15,16 @@ export default function Hero() {
             <p className={` font-mono uppercase text-red flex items-center gap-4 mb-7`}
                style={{ fontSize: 11, letterSpacing: '0.22em', opacity: 0, animation: 'fadeUp 0.8s ease 0.15s forwards' }}>
               <span className="block w-10 h-px bg-red flex-shrink-0" />
-              Based in Kristiansand, Norway &mdash; 19 y/o Founder &amp; Developer
+              Based in Oslo, Norway &middot; Data Engineering Student
             </p>
 
             {/* Headline */}
             <h1 className="font-display font-black uppercase flex flex-col"
                 style={{ fontSize: 'clamp(76px,12vw,170px)', lineHeight: 0.88, letterSpacing: '-0.01em',
                          opacity: 0, animation: 'fadeUp 0.95s ease 0.3s forwards' }}>
-              <span>BUILDING</span>
-              <span>THINGS</span>
-              <span style={{ WebkitTextStroke: '1.5px rgba(240,237,232,0.5)', color: 'transparent' }}>THAT</span>
-              <span className="text-red">MATTER.</span>
+              <span>KRISTOFFER</span>
+              <span style={{ WebkitTextStroke: '1.5px rgba(240,237,232,0.5)', color: 'transparent' }}>NERSKOGEN</span>
+              <span className="text-red">DEVELOPER.</span>
             </h1>
           </div>
 
@@ -39,9 +38,9 @@ export default function Hero() {
         <div className="mt-12 flex items-end justify-between gap-10 max-md:flex-col max-md:items-start"
              style={{ opacity: 0, animation: 'fadeUp 0.8s ease 0.55s forwards' }}>
           <p className="max-w-[480px] text-[15px] leading-[1.8] text-fore/55 font-light">
-            I&apos;m <strong className="text-fore font-medium">Kristoffer</strong> — a developer and founder pushing the limits of what software can do.
-            From <strong className="text-fore font-medium">AI-driven lighting ecosystems</strong> to embedded systems and PCB design.
-            Started coding at 13. Haven&apos;t stopped since.
+            I&apos;m <strong className="text-fore font-medium">Kristoffer</strong>, studying Data Engineering at OsloMet.
+            I mostly write TypeScript, Java, and Python, and spend my spare time on
+            <strong className="text-fore font-medium"> Y-Link</strong>, a music-reactive DMX lighting controller.
           </p>
           <a href="#projects" className="btn-red flex-shrink-0">
             See My Work
@@ -63,10 +62,10 @@ export default function Hero() {
       <div className="relative z-10 grid grid-template-cols-4 border-t border-bdr mt-16 max-md:grid-cols-2"
            style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', opacity: 0, animation: 'fadeIn 1s ease 0.9s forwards' }}>
         {[
-          { num: '6+',   label: 'Years Coding'    },
-          { num: '0→1',  label: 'Product Stage'     },
-          { num: 'Rust', label: 'Language of 2025' },
-          { num: '∞',   label: 'DMX Channels'     },
+          { num: '2019',    label: 'Started Coding'   },
+          { num: 'Java',    label: 'First Language'   },
+          { num: 'OsloMet', label: 'Data Engineering' },
+          { num: 'Oslo',    label: 'Based In'         },
         ].map((s, i) => (
           <div key={s.label}
                className={`stat-card flex flex-col gap-[6px] py-7 hover:bg-bg-2 transition-colors duration-200

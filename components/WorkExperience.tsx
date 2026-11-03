@@ -21,7 +21,7 @@ const jobs: Job[] = [
     tags:    ['IT', 'SEO', 'Next.js', 'Shopify', 'Hardware'],
   },
   {
-    title:   'Sales Consultant',
+    title:   'Technical Sales Associate',
     company: 'Elektroimportøren AS',
     period:  '2020 – Present',
     type:    'Part-time',

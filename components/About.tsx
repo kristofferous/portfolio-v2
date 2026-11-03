@@ -20,31 +20,32 @@ export default function About() {
         {/* Left */}
         <div ref={leftRef as React.RefObject<HTMLDivElement>} className="reveal">
           {[
-            <>Started building <strong className="text-fore font-medium">Minecraft plugins in Java</strong> at 13 — learned everything the hard way through trial, error, and too many Stack Overflow tabs. Now I build real products that run in real venues.</>,
-            <>My flagship is <strong className="text-fore font-medium">Y-Link</strong>: an AI-driven DMX lighting ecosystem that turns music into professional light shows in real time. Beat detection, scene evaluation, moving head choreography — all autonomous.</>,
-            <>Alongside that I do IT and hardware work at <strong className="text-fore font-medium">Axentra</strong>, and I&apos;m deepening expertise in embedded firmware, PCB design, and ML systems. Currently preparing for a 5-year university program in maths, algorithms, and physics.</>,
+            <>I started out writing <strong className="text-fore font-medium">Minecraft plugins in Java</strong> at 13, mostly learning by trial and error. Since then I&apos;ve moved into TypeScript and web development, and picked up Python along the way.</>,
+            <>My main side project is <strong className="text-fore font-medium">Y-Link</strong>, a DMX lighting controller that reacts to music with beat detection and automatic scene changes. It&apos;s also how I got into embedded hardware and PCB design.</>,
+            <>Y-Link is written in Rust, which I don&apos;t write by hand, so I build it with <strong className="text-fore font-medium">AI coding agents</strong>: I plan the architecture, break down the tasks, and review and test what they produce. In Java, TypeScript, and Python I write the code myself. I pick whichever approach fits the project.</>,
+            <>I study Data Engineering (dataingeniør) at <strong className="text-fore font-medium">OsloMet</strong> and have worked part-time with IT and hardware at <strong className="text-fore font-medium">Axentra</strong>.</>,
           ].map((text, i) => (
             <p key={i} className="text-[15px] leading-[1.85] text-fore/60 font-light mb-6">{text}</p>
           ))}
           <blockquote className="border-l-2 border-red pl-6 mt-9 font-display font-semibold text-xl uppercase tracking-[0.02em] text-fore" style={{ lineHeight: 1.4 }}>
-            &ldquo;Strong in Rust &amp; JavaScript. Expanding into embedded, AI/ML, and beyond.&rdquo;
+            &ldquo;Strong in Java, TypeScript &amp; Python. Comfortable coding with or without AI.&rdquo;
           </blockquote>
         </div>
 
         {/* Right */}
         <div ref={rightRef as React.RefObject<HTMLDivElement>} className="reveal">
           {/* Profile card */}
-          <div className="border border-bdr bg-bg-2 p-8 mb-5 hover:border-bdrhv transition-colors duration-200">
+          <div className="border border-bdr bg-bg-2 p-8 hover:border-bdrhv transition-colors duration-200">
             <div className="flex items-center gap-[18px] mb-5">
               <div className="w-12 h-12 bg-red flex items-center justify-center font-display font-black text-2xl text-white flex-shrink-0">K</div>
               <div>
                 <div className="font-display font-bold text-xl uppercase tracking-[0.05em]">Kristoffer</div>
-                <div className="font-mono text-grey uppercase mt-1" style={{ fontSize: 10, letterSpacing: '0.15em' }}>Founder &amp; Developer</div>
+                <div className="font-mono text-grey uppercase mt-1" style={{ fontSize: 10, letterSpacing: '0.15em' }}>Developer &amp; Student</div>
               </div>
             </div>
             <p className="text-[13px] text-fore/50 leading-[1.7] border-t border-bdr pt-4 mb-4">
-              Kristiansand, Norway · 19 y/o<br />
-              Founder &amp; building Y-Link
+              Oslo, Norway · 19 y/o<br />
+              Data Engineering @ OsloMet
             </p>
             <div className="flex gap-5">
               {['https://nerskogen.com','https://y-link.no'].map(url => (
@@ -57,20 +58,6 @@ export default function About() {
             </div>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 gap-px bg-bdr border border-bdr">
-            {[
-              { num: '6+', label: 'Years Coding'   },
-              { num: '0→1', label: 'Product Stage'  },
-              { num: '2021', label: 'First Commit'  },
-              { num: '∞',  label: 'DMX Channels'   },
-            ].map(s => (
-              <div key={s.label} className="stat-card bg-bg-2 p-6 flex flex-col gap-[6px] hover:bg-bg-3 transition-colors duration-200">
-                <span className="font-display font-black text-red" style={{ fontSize: 44, lineHeight: 1, letterSpacing: '-0.02em' }}>{s.num}</span>
-                <span className="font-mono text-grey uppercase" style={{ fontSize: 9, letterSpacing: '0.2em' }}>{s.label}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>

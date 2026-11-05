@@ -26,7 +26,7 @@ export default function Contact() {
           null,
           { href:'https://y-link.no',      label:'y-link.no'       },
           null,
-          { href:'https://github.com',     label:'GitHub'          },
+          { href:'https://github.com/kristofferous',     label:'GitHub'          },
           null,
           { href:'tel:+4796632121',        label:'+47 966 32 121'  },
         ].map((item, i) =>
